@@ -4,8 +4,6 @@ include 'db_connect.php';
 
 if(isset($_POST['choice']) && !empty($_POST['choice'])) {
     $selected_choice = $_POST['choice'];
-    
-
 
     $data = array();
     error_log("q $selected_choice");
@@ -43,6 +41,7 @@ if(isset($_POST['choice']) && !empty($_POST['choice'])) {
 
     echo json_encode($data);
 } else {
-    echo json_encode(array());
+    error_log("no data available");
+    //echo json_encode(array());
 }
 ?>

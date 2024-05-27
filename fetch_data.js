@@ -147,8 +147,6 @@ function confirmationDialog(data, index) {
     document.body.appendChild(prompt);
 }
 
-
-
 function deleteData(data, index) {
     let sendData="";
     var xhr = new XMLHttpRequest();
