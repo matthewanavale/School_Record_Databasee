@@ -1,0 +1,32 @@
+# Use the PHP 7.3 runtime (BETA) by replacing "php72" below with "php73"
+runtime: php82
+
+# Defaults to "serve index.php" and "serve public/index.php". Can be used to
+# serve a custom PHP front controller (e.g. "serve backend/index.php") or to
+# run a long-running PHP script as a worker process (e.g. "php worker.php").
+#
+# Serve your app through a front controller at index.php or public/index.php.
+runtime_config:
+  document_root: .
+
+handlers:
+# Serve images as static resources.
+- url: /(.+\.(gif|png|jpg|css|js|map|PNG))$
+  static_files: \1
+  upload: .+\.(gif|png|jpg|css|js|map|PNG)$
+
+- url: /.*
+  script: auto
+
+entrypoint:
+  serve index.php
+
+
+env_variables:
+  # Replace USER, PASSWORD, DATABASE, and CONNECTION_NAME with the
+  # values obtained when configuring your Cloud SQL instance.
+  CLOUDSQL_USER: root
+  CLOUDSQL_DB: cse3
+  CLOUDSQL_PASSWORD: =x(t&]Vg%L,}iCSt
+  CLOUDSQL_DSN: /cloudsql/database-424208:us-central1:cse3
+# [END gae_cloudsql_mysql_env]
