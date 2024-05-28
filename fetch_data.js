@@ -73,7 +73,6 @@ function updateTable(data) {
                 var cell = document.createElement('td'); // Create a new table cell
                 cell.textContent = rowData[key]; // Set the text content of the cell
                 row.appendChild(cell); // Append the cell to the row
-                
                 //console.log(rowData.DepartmentID);
             }
             
@@ -95,8 +94,27 @@ function updateTable(data) {
             confirmationDialog(data, index);
             //deleteData(data, index);
         });
+
         action.appendChild(button);
         row.appendChild(action);
+        //edit 
+        let action2 = document.createElement('td');
+        action2.className = 'edit-btn';
+        edit = document.createElement('button');
+        edit.textContent = "Edit";
+        edit.setAttribute('edt-index', index);
+
+        edit.addEventListener('click', function(){
+            var dataIndex = row.getAttribute('data-index');
+            console.log("Edit clicked, index:", dataIndex);
+            console.log("edit data:", data[dataIndex]);
+            editConfirmation(data, dataIndex);
+        })
+
+        action2.appendChild(edit);
+        row.appendChild(action2);
+
+        
 
         // Append the row to the tbody
         tbody.appendChild(row);
@@ -104,14 +122,164 @@ function updateTable(data) {
     
 }
 
+function editConfirmation(data, index){
+    let confirmation = document.createElement('div');
+    confirmation.className = 'edit-confirmation';
+    console.log("data", data);
+    console.log("index: ", index);
+    let dialog = document.createElement('div');
+    dialog.className = 'edit-dialog'; 
+
+    let dialogLabel = document.createElement('p');
+    dialogLabel.textContent = `Are you sure you want to edit ${data[index]['CourseID']}?`;
+    const key = [];
+    const count = Object.keys(data[index]);
+    console.log("count: ", count[0]);
+    const dami = count.length; //number of keys in the array
+
+    //populate the key for label
+    for(let j = 0; j < dami; j++) {
+        key[j] = count[j]; 
+    }
+    console.log("length: ", dami);
+    //populate the input fields
+    for (let i = 0; i <dami; i++){
+        let input = document.createElement('input');
+        input.type='text';
+        input.name = key[i];
+        input.value = data[index][key[i]];
+        input.required = true;
+        
+        if(key[i] == 'StudentID'){
+            input.readOnly = true;
+            input.disabled = true;
+        }
+        else if(key[i] == 'Credits'){
+            input.type = 'number';
+        }
+        else if (key[i] == 'DepartmentID' && key[i-1] != 'MajorName'){
+            input.readOnly = true;
+            input.disabled = true;
+        }
+        else if (key[i] == 'MajorID'){
+            input.readOnly = true;
+            input.disabled = true;
+        }
+        else if (key[i] == 'CourseID'){
+            input.readOnly = true;
+            input.disabled = true;
+        }
+        if (key[i] == 'DepartmentID' && key[i-1] == 'MajorName'){
+            console.log("MajorName: ", key[i+1]);
+            var departmentIdSelect = document.createElement('select');
+                departmentIdSelect.name = 'DepartmentID';
+                fetch('get_dept_id.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(departmentId => {
+                            var option = document.createElement('option');
+                            option.value = departmentId;
+                            option.text = departmentId;
+                            departmentIdSelect.appendChild(option);
+                        });
+                        
+                    })
+                    .catch(error => console.error('Error:', error));
+            dialog.appendChild(departmentIdSelect);
+        }
+        else if(key[i] == 'DepartmentName' && key[i-1] == 'Credits'){
+            var departmentIdSelect = document.createElement('select');
+                departmentIdSelect.name = 'DepartmentName';
+                fetch('get_deptname.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(departmentId => {
+                            var option = document.createElement('option');
+                            option.value = departmentId;
+                            option.text = departmentId;
+                            departmentIdSelect.appendChild(option);
+                        });
+                        
+                    })
+                    .catch(error => console.error('Error:', error));
+                    dialog.appendChild(departmentIdSelect);
+        }
+        else if (key[i]=='MajorID' && key[i-1] == 'LastName'){
+            var MajorIdSelect = document.createElement('select');
+                MajorIdSelect.name = 'MajorID';
+                fetch('get_major.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(MajorId => {
+                            var option = document.createElement('option');
+                            option.value = MajorId;
+                            option.text = MajorId;
+                            MajorIdSelect.appendChild(option);
+                        });
+                        
+                    })
+                    .catch(error => console.error('Error:', error));
+                    dialog.appendChild(MajorIdSelect);
+        }
+        else{
+            dialog.appendChild(input);
+        }
+    }
+
+    //double check if pwede mo isend ung s na credits sa i dapat, if hindi try to convert the credits
+    //sa php to make it i
+
+    let editConfirm = document.createElement('div');
+    editConfirm.className = 'edit-confirm';
+
+    let confirmButton = document.createElement('button');
+    confirmButton.className = 'confirm';
+    confirmButton.type = 'submit';
+    confirmButton.value = 'Submit';
+    confirmButton.textContent = 'Submit';
+
+    let cancelButton = document.createElement('button');
+    cancelButton.className = 'cancel';
+    cancelButton.type = 'button';
+    cancelButton.value = 'Cancel';
+    cancelButton.textContent = 'Cancel';
+
+    editConfirm.appendChild(confirmButton);
+    editConfirm.appendChild(cancelButton);
+
+
+    //confirmation.appendChild();
+    confirmation.appendChild(dialogLabel);
+    confirmation.appendChild(dialog);
+    confirmation.appendChild(editConfirm);
+
+
+    cancelButton.addEventListener('click', function(){
+        document.body.removeChild(confirmation);
+        document.body.removeEventListener('click', outsideClickListener);
+    })
+
+    //HINDI NAGANA TO
+    function outsideClickListener(event) {
+        if (confirmation.contains(event.target)) {
+            document.body.removeChild(prompt);
+            document.removeEventListener('click', outsideClickListener);
+        }
+    }
+    document.body.appendChild(confirmation);
+}
+
+
+
+
+
 function confirmationDialog(data, index) {
     var prompt = document.createElement('div');
     prompt.className = 'prompt';
-
     var dialog = document.createElement('div');
     dialog.className = 'dialog';
     dialog.innerHTML = `
-        <p>Are you sure you want to delete ${data[index].DepartmentID}?</p> 
+        <p>Are you sure you want to delete ${data[index]}?</p> 
     `;
 
     var buttonBox = document.createElement('div');
@@ -176,4 +344,8 @@ function deleteData(data, index) {
     let params = "data=" + sendData + "&choice=" + currentChoice;
     xhr.send(params);
     location.reload();
+}
+
+function editData(data, index){
+
 }
