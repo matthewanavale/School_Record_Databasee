@@ -16,7 +16,7 @@ if(isset($_POST['choice']) && !empty($_POST['choice'])) {
         error_log("1 $sql");
     } 
     elseif ($selected_choice == 'Course') {
-        $sql = "SELECT * FROM course";
+        $sql = "SELECT * FROM newcourse";
     } 
     elseif ($selected_choice == 'Student') {
         $sql = "SELECT * FROM student";

@@ -48,11 +48,24 @@ $current_choice = isset($_GET['choice']) ? $_GET['choice'] : '';
             </div>
         </div>
         <div class="charts">
-            <div>
-                <canvas id="Chart1"></canvas>
+            
+            <div class="chart1">
+                <div class="chart1-label">
+                    <p>Total Number of Students per Major</p>
+                </div>
+                <div class="chart1-data">
+                    <canvas id="Chart1"></canvas>
+                </div>
             </div>
-            <div>
-                <canvas id="Chart2"></canvas>
+
+
+            <div class="chart2">
+                <div class="chart2-label">
+                    <p>Total Number of Course per Department</p>
+                </div>
+                <div class="chart2-data">
+                    <canvas id="Chart2"></canvas>
+                </div>
             </div>
         </div>
     </div>

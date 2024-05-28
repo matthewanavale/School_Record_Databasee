@@ -32,10 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $CourseID = $_POST['CourseID'];
         $CourseName = $_POST['CourseName'];
         $Credits = $_POST['Credits'];
-        error_log( "CourseID: $CourseID, CourseName: $CourseName, Credits: $Credits");
+        $DepartmentName = $_POST['DepartmentName'];
+        error_log( "CourseID: $CourseID, CourseName: $CourseName, Credits: $Credits, DepartmentName: $DepartmentName");
 
-        $stmt = $conn->prepare("INSERT INTO `course`(`CourseID`, `CourseName`, `Credits`) VALUES (?, ?, ?)");
-        $stmt->bind_param("ssi", $CourseID, $CourseName, $Credits);
+        $stmt = $conn->prepare("INSERT INTO `newcourse`(`CourseID`, `CourseName`, `Credits`, `DepartmentName`) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssis", $CourseID, $CourseName, $Credits, $DepartmentName);
         $stmt->execute();
         header("Location: forms.php");
         exit();

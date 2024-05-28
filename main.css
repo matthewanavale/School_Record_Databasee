@@ -247,7 +247,7 @@ form button {
     display: flex;
     flex-direction: column;
     width: 1427px;
-    height: 645px;
+    height: 695px;
     background-color: #5F645D;
     margin-top: 80px;
     align-items: center;
@@ -256,62 +256,56 @@ form button {
 .charts {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .numerics{
     display: flex;
     flex-direction: row;
     width: 100%;
+    justify-content: space-around;
 }
 
 .total-students{
-    background-color: #d9d9d99c;
-    width: 100%;
+    background-color: #d9d9d9;
+    width: 229px;
     height: 114px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-top: 10px;
 }
 .total-departments{
-    background-color: #d9d9d99c;
-    width: 100%;
+    background-color: #d9d9d9;
+    width: 229px;
     height: 114px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-top: 10px;
 }
 .total-majors{
-    background-color: #d9d9d99c;
-    width: 100%;
+    background-color: #d9d9d9;
+    width: 229px;
     height: 114px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-top: 10px;
 }
 .total-course{
-    background-color: #d9d9d99c;
-    width: 100%;
+    background-color: #d9d9d9;
+    width: 229px;
     height: 114px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-top: 10px;
 }
 
-#Chart1 {
-    width: 400px;
-    height: 400px;
-    margin-left: 100px;
-    margin-bottom: 60px;
-}
 
-#Chart2 {
-    width: 400px;
-    height: 400px;
-    margin-right: 100px;
-    margin-bottom: 60px;
-}
 
 #total-students-label, #total-departments-label, #total-majors-label, #total-course-label {
     font-size: 20px;
@@ -328,4 +322,44 @@ form button {
     color: #494932;
     margin: 0;
     padding-right: 20px;
+}
+
+.chart1 {
+    background-color: #d9d9d9;
+    width: 600px;
+    height: 481px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chart1-data {
+    width: 400px;
+    height: 450px;
+}
+
+.chart1-label {
+    width: 100%;
+    text-align: center;
+}
+
+.chart2 {
+    background-color: #d9d9d9;
+    width: 600px;
+    height: 481px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chart2-data {
+    width: 400px;
+    height: 450px;
+}
+
+.chart2-label {
+    width: 100%;
+    text-align: center;
 }

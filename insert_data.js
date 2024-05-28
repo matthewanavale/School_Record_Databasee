@@ -108,6 +108,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 creditsInput.name = 'Credits';
                 creditsInput.placeholder = 'Credits';
                 form.appendChild(creditsInput);
+
+                var departmentIdSelect = document.createElement('select');
+                departmentIdSelect.name = 'DepartmentName';
+                fetch('get_deptname.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(departmentId => {
+                            var option = document.createElement('option');
+                            option.value = departmentId;
+                            option.text = departmentId;
+                            departmentIdSelect.appendChild(option);
+                        });
+                        
+                    })
+                    .catch(error => console.error('Error:', error));
+                    form.appendChild(departmentIdSelect);
             }
 
             else if (choice === 'Student') {
