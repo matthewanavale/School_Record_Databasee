@@ -31,19 +31,19 @@ $current_choice = isset($_GET['choice']) ? $_GET['choice'] : '';
     <div class="dashboard">
         <div class="numerics">
             <div class="total-students">
-                <p>Total Students</p>
+                <p id="total-students-label">Total Students</p>
                 <p id="total-students-data">Data</p>
             </div>
             <div class="total-departments">
-                <p>Total Departments</p>
+                <p id="total-departments-label">Total Departments</p>
                 <p id="total-departments-data">Data</p>
             </div>
             <div class="total-majors">
-                <p>Total Majors</p>
+                <p id="total-majors-label">Total Majors</p>
                 <p id="total-majors-data">Data</p>
             </div>
             <div class="total-course">
-                <p>Total Courses</p>
+                <p id="total-course-label">Total Courses</p>
                 <p id="total-courses-data">Data</p>
             </div>
         </div>

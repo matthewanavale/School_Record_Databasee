@@ -253,7 +253,6 @@ form button {
     align-items: center;
     justify-content: space-between;
 }
-
 .charts {
     display: flex;
     flex-direction: row;
@@ -271,21 +270,33 @@ form button {
     background-color: #d9d9d99c;
     width: 100%;
     height: 114px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .total-departments{
     background-color: #d9d9d99c;
     width: 100%;
     height: 114px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .total-majors{
     background-color: #d9d9d99c;
     width: 100%;
     height: 114px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .total-course{
     background-color: #d9d9d99c;
     width: 100%;
     height: 114px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #Chart1 {
@@ -302,6 +313,19 @@ form button {
     margin-bottom: 60px;
 }
 
+#total-students-label, #total-departments-label, #total-majors-label, #total-course-label {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
 #total-students-data, #total-departments-data, #total-majors-data, #total-courses-data {
     text-align: right;
+    font-size: 48px;
+    font-weight: 800;
+    color: #494932;
+    margin: 0;
+    padding-right: 20px;
 }
