@@ -1,6 +1,5 @@
 
 let currentChoice="";
-
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.choice-navbar div').forEach(item => {
         item.addEventListener('click', function() {
@@ -63,9 +62,9 @@ function updateTable(data) {
     // Loop through the fetched data and create table rows
     data.forEach(function(rowData, index) {
         var row = document.createElement('tr'); // Create a new table row
-        console.log("data:", rowData.StudentID + " index: ", index);
+        //console.log("data:", rowData.StudentID + " index: ", index);
         row.setAttribute('data-index', index);
-        console.log("row attributes: ", row.getAttribute('data-index'));
+        //console.log("row attributes: ", row.getAttribute('data-index'));
         //console.log(rowData, index);
         // Loop through each property in the rowData object and create table cells
         for (var key in rowData) {
@@ -85,7 +84,7 @@ function updateTable(data) {
         button.setAttribute('data-index', index);
         //let xc = button.getAttribute('data-index');
         //console.log(xc);
-        console.log("button attribute", button.getAttribute('data-index'));
+        //console.log("button attribute", button.getAttribute('data-index'));
         button.addEventListener('click', function() {
             var index = row.getAttribute('data-index');
             console.log("Button clicked, index:", index);
@@ -127,11 +126,27 @@ function editConfirmation(data, index){
     confirmation.className = 'edit-confirmation';
     console.log("data", data);
     console.log("index: ", index);
+
+    let editForm = document.createElement('form');
+    editForm.className = 'edit-form';
+    editForm.method = 'POST';
+    editForm.action = 'edit_data.php';
+
+    //feed the choice to the form for backend processing
+    let choice = document.createElement('input');
+    choice.value = currentChoice;
+    choice.type = 'hidden';
+    choice.name = 'choice';
+    editForm.appendChild(choice);
+
     let dialog = document.createElement('div');
     dialog.className = 'edit-dialog'; 
 
     let dialogLabel = document.createElement('p');
-    dialogLabel.textContent = `Are you sure you want to edit ${data[index]['CourseID']}?`;
+    dialogLabel.textContent = `Edit ${currentChoice}`;
+    dialogLabel.id = 'edit-label';
+
+    //for chart creation
     const key = [];
     const count = Object.keys(data[index]);
     console.log("count: ", count[0]);
@@ -152,22 +167,22 @@ function editConfirmation(data, index){
         
         if(key[i] == 'StudentID'){
             input.readOnly = true;
-            input.disabled = true;
+            //input.disabled = true;
         }
         else if(key[i] == 'Credits'){
             input.type = 'number';
         }
         else if (key[i] == 'DepartmentID' && key[i-1] != 'MajorName'){
             input.readOnly = true;
-            input.disabled = true;
+            //input.disabled = true;
         }
         else if (key[i] == 'MajorID'){
             input.readOnly = true;
-            input.disabled = true;
+            //input.disabled = true;
         }
         else if (key[i] == 'CourseID'){
             input.readOnly = true;
-            input.disabled = true;
+            //input.disabled = true;
         }
         if (key[i] == 'DepartmentID' && key[i-1] == 'MajorName'){
             console.log("MajorName: ", key[i+1]);
@@ -185,7 +200,7 @@ function editConfirmation(data, index){
                         
                     })
                     .catch(error => console.error('Error:', error));
-            dialog.appendChild(departmentIdSelect);
+            editForm.appendChild(departmentIdSelect);
         }
         else if(key[i] == 'DepartmentName' && key[i-1] == 'Credits'){
             var departmentIdSelect = document.createElement('select');
@@ -202,7 +217,7 @@ function editConfirmation(data, index){
                         
                     })
                     .catch(error => console.error('Error:', error));
-                    dialog.appendChild(departmentIdSelect);
+                    editForm.appendChild(departmentIdSelect);
         }
         else if (key[i]=='MajorID' && key[i-1] == 'LastName'){
             var MajorIdSelect = document.createElement('select');
@@ -219,10 +234,10 @@ function editConfirmation(data, index){
                         
                     })
                     .catch(error => console.error('Error:', error));
-                    dialog.appendChild(MajorIdSelect);
+                    editForm.appendChild(MajorIdSelect);
         }
         else{
-            dialog.appendChild(input);
+            editForm.appendChild(input);
         }
     }
 
@@ -244,22 +259,38 @@ function editConfirmation(data, index){
     cancelButton.value = 'Cancel';
     cancelButton.textContent = 'Cancel';
 
-    editConfirm.appendChild(confirmButton);
-    editConfirm.appendChild(cancelButton);
-
+    editForm.appendChild(confirmButton);
+    editForm.appendChild(cancelButton);
+     //append the form to the dialog
 
     //confirmation.appendChild();
     confirmation.appendChild(dialogLabel);
-    confirmation.appendChild(dialog);
+    confirmation.appendChild(editForm);
     confirmation.appendChild(editConfirm);
 
+    confirmButton.addEventListener('click', function(){
+        console.log('submitting', editStatus);
+        let notif = document.createElement('div');
+        notif.className = 'notification';
+        let notifStatus = document.createElement('div');
+        notifStatus.className = 'notif-status';
+
+        let notifText = document.createElement('p');
+        notifText.textContent = editStatus;
+
+        notifStatus.appendChild(notifText);
+        notif.appendChild(notifStatus);
+        //document.body.removeChild(editConfirm);
+        document.body.appendChild(notif);
+        //updateTable(data);
+    });
 
     cancelButton.addEventListener('click', function(){
         document.body.removeChild(confirmation);
         document.body.removeEventListener('click', outsideClickListener);
     })
 
-    //HINDI NAGANA TO
+    //HINDI NAGANA TO if user clicked outside the box it should close
     function outsideClickListener(event) {
         if (confirmation.contains(event.target)) {
             document.body.removeChild(prompt);
@@ -268,9 +299,6 @@ function editConfirmation(data, index){
     }
     document.body.appendChild(confirmation);
 }
-
-
-
 
 
 function confirmationDialog(data, index) {
@@ -346,6 +374,4 @@ function deleteData(data, index) {
     location.reload();
 }
 
-function editData(data, index){
-
-}
+//console.log("edit status: ", editStatus);

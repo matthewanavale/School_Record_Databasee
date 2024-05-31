@@ -1,4 +1,12 @@
 <?php
+session_start();
+//if (isset($_SESSION['status'])) {
+    //echo "<p>" . $_SESSION['status'] . "</p>";
+    //$status = $_SESSION['status'];
+    //unset($_SESSION['status']); // Clear the status message after displaying it
+//}
+$status = isset($_SESSION['status']) ? $_SESSION['status'] : '';
+unset($_SESSION['status']);
 include 'db_connect.php';
 include 'fetch_data.php';
 //include 'delete_data.php';
@@ -43,6 +51,10 @@ $current_choice = isset($_GET['choice']) ? $_GET['choice'] : '';
 
         </table>
     </div>
+    <script>
+        let editStatus = <?php echo json_encode($status); ?>;
+        console.log(editStatus);
+    </script>
     <script src="fetch_data.js"></script>
 </body>
 </html>

@@ -72,5 +72,5 @@ $current_choice = isset($_GET['choice']) ? $_GET['choice'] : '';
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="dashboard.js"></script>
+<script src="dashboard.js"> </script>
 </html>

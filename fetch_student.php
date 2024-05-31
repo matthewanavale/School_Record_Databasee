@@ -9,7 +9,6 @@ if (isset($_POST['choice'])){
     error_log("POST is set");
     $studentID = $_POST['choice'];
     error_log("studentID choice: $studentID");
-
     
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s', $studentID);

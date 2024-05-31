@@ -75,6 +75,6 @@ $encodedData = urlencode($data);
     </div>
 
 </body>
-<script> var dataFromPHP = "<?php echo $_GET['data'];?>"; </script>
+<script> var dataFromPHP = "<?php echo $_GET['data'];?>"; </script> 
 <script src="student_portal.js"></script>
 </html>

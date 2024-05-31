@@ -11,7 +11,6 @@ function fetchData(dataFromPHP) {
             console.log(xhr.responseText);
             var data = JSON.parse(xhr.responseText);
             console.log("data from db: ", data);
-            if (header) 
             updateData(data);
         }
     };
